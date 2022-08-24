@@ -2,14 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { TextField, Stack, Button } from '@mui/material';
 import TodoItems from '../ListItems/TodoItems';
 
-// React .memo and usememo are two different function
 // probaly need to fix the use call back expression 
 // need to implement some kind of optimisation for this
+//need to make it mobile responsive as well
 
 export const Searchbar = () => {
 
   const [listtItems, setListItems] = useState([]);
   const [currentText, setText] = useState('');
+  const [operatingItemId, setOperatingIdItem] = useState('');
 
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export const Searchbar = () => {
           isChecked: false,
         },
       ]);
-      console.log(listtItems);
+
       localStorage.setItem('NoteData', JSON.stringify(listtItems));
       setText('')
     }
@@ -36,11 +37,13 @@ export const Searchbar = () => {
 
   const deleteNotes = useCallback((deleteItem) => {
 
+
     const result = listtItems.findIndex((el) => el.id === deleteItem.id);
     const updatedList = [...listtItems]
     updatedList.splice(result, 1);
     localStorage.setItem('NoteData', JSON.stringify(updatedList));
     setListItems(updatedList);
+    // setOperatingIdItem(deleteItem.id);
     setText('')
 
   }, [listtItems])
@@ -52,16 +55,18 @@ export const Searchbar = () => {
     updatedList[result].isChecked = !checkboxItem.isChecked;
     localStorage.setItem('NoteData', JSON.stringify(updatedList));
     setListItems(updatedList);
+    setOperatingIdItem(checkboxItem.id);
     setText('')
 
   }, [listtItems])
   return (
     <>
 
-      <Stack direction='row' sx={{ border: '1px solid #8c8888c2', justifyContent: 'space-evenly', margin: '1rem' }}>
+      <Stack direction={{ md: 'row', xs: 'column', sm: 'row' }} sx={{ padding: "1rem", border: '1px solid #8c8888c2', justifyContent: 'space-evenly', margin: '1rem', backgroundColor: "#78979d0f", }}>
 
         <TextField
-          sx={{ width: '40rem' }}
+          sx={{ width: { xs: '100%', md: '90%', sm: '80%', lg: '80%' } }}
+          fullWidth
           multiline
           helperText={listtItems.length > 0 ? `Add Items || Item Count : ${listtItems.length}` : `Add Items  || Item Count : 0`}
           label="Take Notes"
@@ -80,7 +85,7 @@ export const Searchbar = () => {
         <Button onClick={addItems}> Add Item</Button>
       </Stack>
 
-      {listtItems.length > 0 && <TodoItems totalCount={listtItems.length} listData={Object.values(listtItems)} deleteNotes={deleteNotes} handleCheckbox={handleCheckbox} />}
+      {listtItems.length > 0 && <TodoItems operatingItemId={operatingItemId} totalCount={listtItems.length} listData={Object.values(listtItems)} deleteNotes={deleteNotes} handleCheckbox={handleCheckbox} />}
     </>
 
   );
