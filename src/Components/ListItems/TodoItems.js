@@ -36,17 +36,22 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
             overflowX: "hidden",
         }}
     >
-        {loading && <p style={{ textAlign: "center" }}> Loading...</p>}
+        {/* {loading && <p style={{ textAlign: "center" }}> Loading...</p>} */}
         <AnimatePresence >
-            {!loading && renderList?.reverse().map((element, i) => {
+            {renderList?.reverse().map((element, i) => {
                 return (
                     <Stack
-                        key={element.id} spacing={{ xs: 0.2, sm: 0.5, md: 1 }}
+                        key={element.id}
+                        spacing={{ xs: 0.2, sm: 0.5, md: 1 }}
                         component={motion.div}
                         variants={{
                             hidden: { opacity: 0, y: -50 },
-                            visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.7 } }),
-                            exit: { opacity: 0, y: 50 }
+                            visible: (i) => ({
+                                opacity: 1,
+                                y: 0,
+                                transition: { delay: i * 0.7 },
+                            }),
+                            exit: { opacity: 0, y: 50 },
                         }}
                         custom={i}
                         initial="hidden"
@@ -54,7 +59,7 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
                         exit="exit"
                     >
                         <Stack
-                            direction={{ md: 'row', xs: 'column', sm: 'row' }}
+                            direction={{ md: "row", xs: "column", sm: "row" }}
                             spacing={{ md: 2 }}
                             sx={{
                                 wordBreak: "break-word",
@@ -67,38 +72,91 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
                             elevation={8}
                             key={i}
                         >
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'start',
-                                justifyContent: 'space-evenly',
-                                padding: '0 0.5rem',
-                            }}>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "start",
+                                    justifyContent: "space-evenly",
+                                    padding: "0 0.5rem",
+                                }}
+                            >
                                 <Checkbox
                                     onChange={() => handleCheckbox(element)}
                                     checked={element.isChecked}
                                 />
-                                <Divider variant='middle' orientation='vertical' />
-                                <span
-                                    style={{
-                                        textDecorationLine: element.isChecked
-                                            ? "line-through"
-                                            : "unset",
-                                        textDecorationColor: "#f0164f9c",
-                                    }}
+                                <Divider variant="middle" orientation="vertical" />
+                                <motion.span
+                                    style={{ position: "relative", textDecorationColor: 'red' }}
+
                                 >
-                                    <Typography mt={1} align="left" alignContent={"flex-start"} > {element.value} </Typography>
-                                </span>
+                                    <Typography
+
+                                        component={motion.p}
+                                        variants={{
+                                            checked: (element) => ({
+                                                marginLeft: element.isChecked ? '1rem' : '0px',
+                                                opacity: element.isChecked ? 0.5 : 1,
+                                                scale: element.isChecked ? 1.2 : 1,
+                                                rotate: element.isChecked ? 360 : 0,
+                                                textDecoration: element.isChecked
+                                                    ? "line-through red"
+                                                    : "unset",
+                                                transition: { duration: 0.5 },
+
+                                            }),
+                                        }}
+                                        initial={false}
+                                        animate="checked"
+                                        custom={element}
+                                        key={element.id}
+                                        mt={1}
+                                        align="left"
+                                        alignContent={"flex-start"}
+                                    >
+                                        {element.value}
+                                    </Typography>
+                                </motion.span>
                             </div>
 
                             {/* <Button >Delete</Button> */}
 
                             <>
-                                <IconButton title="Delete item" sx={{ display: { xs: 'none', sm: 'block', md: 'block', lg: 'block', xl: 'block' } }} onClick={() => deleteNotes(element)} aria-label="delete">
+                                <IconButton
+                                    title="Delete item"
+                                    sx={{
+                                        display: {
+                                            xs: "none",
+                                            sm: "block",
+                                            md: "block",
+                                            lg: "block",
+                                            xl: "block",
+                                        },
+                                    }}
+                                    onClick={() => deleteNotes(element)}
+                                    aria-label="delete"
+                                >
                                     <DeleteIcon />
                                 </IconButton>
-                                <Button onClick={() => deleteNotes(element)} fullWidth mt={2} sx={{ display: { xs: 'block', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, marginTop: '1rem !important' }} variant="outlined"> Delete </Button>
+                                <Button
+                                    onClick={() => deleteNotes(element)}
+                                    fullWidth
+                                    mt={2}
+                                    sx={{
+                                        display: {
+                                            xs: "block",
+                                            sm: "none",
+                                            md: "none",
+                                            lg: "none",
+                                            xl: "none",
+                                        },
+                                        marginTop: "1rem !important",
+                                    }}
+                                    variant="outlined"
+                                >
+                                    {" "}
+                                    Delete{" "}
+                                </Button>
                             </>
-
                         </Stack>
                     </Stack>
                 );
