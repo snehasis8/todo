@@ -1,58 +1,71 @@
-import React, { useEffect } from "react";
-import { Stack, Button, Typography, IconButton, Tooltip, Divider, Checkbox } from "@mui/material";
-// import Checkbox from "@mui/material/Checkbox";
-// import { DeleteIcon } from '@mui/icons-material';
+import React, { useEffect, useState } from "react";
+import { Stack, Button, Typography, IconButton, Divider, Checkbox } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-// import useMediaQuery from '@mui/material/useMediaQuery';
+import { motion, AnimatePresence } from "framer-motion"
 
 const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCount, operatingItemId }) => {
     const renderList = Object.values(listData);
-
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         return () => {
+            setTimeout(() => {
+                setLoading(false)
+            }, 1300)
             //component will unmount action
-            localStorage.setItem('NoteData', JSON.stringify(renderList));
+            // localStorage.setItem('NoteData', JSON.stringify(renderList));
         };
     }, [renderList]);
 
 
-
-
-    return (
-        <Stack
-            elevation={3}
-            spacing={{ xs: 0.2, sm: 0.5, md: 1 }}
-            // direction={{ md: 'column', xs: 'row', sm: 'row' }}
-            sx={{
-                padding: "0.5rem",
-                maxHeight: "calc(75vh - 5rem)",
-                overflowY: "auto",
-                justifyContent: "stretch",
-                margin: "1rem",
-                border: "1px solid #8c8888c2",
-                backgroundColor: "#78979d0f",
-            }}
-        >
-            {renderList?.reverse().map((element, i) => {
+    return (<Stack
+        // initial={{ opacity: 0, y: 200 }}
+        // animate={{ opacity: 1, y: 0 }}
+        // exit={{ opacity: 0, y: 200 }}
+        // transition={{ type: "tween", duration: 0.7 }}
+        elevation={3}
+        spacing={{ xs: 0.2, sm: 0.5, md: 1 }}
+        // direction={{ md: 'column', xs: 'row', sm: 'row' }}
+        sx={{
+            padding: "0.5rem",
+            maxHeight: "calc(75vh - 5rem)",
+            overflowY: "auto",
+            justifyContent: "stretch",
+            margin: "1rem",
+            border: "1px solid #8c8888c2",
+            backgroundColor: "#78979d0f",
+            overflowX: "hidden",
+        }}
+    >
+        {loading && <p style={{ textAlign: "center" }}> Loading...</p>}
+        <AnimatePresence >
+            {!loading && renderList?.reverse().map((element, i) => {
                 return (
                     <Stack
-                        spacing={{ xs: 0.2, sm: 0.5, md: 1 }}
+                        key={element.id} spacing={{ xs: 0.2, sm: 0.5, md: 1 }}
+                        component={motion.div}
+                        variants={{
+                            hidden: { opacity: 0, y: -50 },
+                            visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.7 } }),
+                            exit: { opacity: 0, y: 50 }
+                        }}
+                        custom={i}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
                     >
                         <Stack
                             direction={{ md: 'row', xs: 'column', sm: 'row' }}
                             spacing={{ md: 2 }}
                             sx={{
-                                padding: "20px",
-                                // height: "34px",
                                 wordBreak: "break-word",
                                 display: "flex",
                                 flexDirection: "row",
                                 alignItems: "center",
                                 justifyContent: "space-between",
+                                // border: "1px solid red"
                             }}
-                            elevation={3}
-                            key={element.id}
-                            variant=""
+                            elevation={8}
+                            key={i}
                         >
                             <div style={{
                                 display: 'flex',
@@ -78,19 +91,20 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
                             </div>
 
                             {/* <Button >Delete</Button> */}
-                            <Tooltip title="Delete">
-                                <>
-                                    <IconButton sx={{ display: { xs: 'none', sm: 'block', md: 'block', lg: 'block', xl: 'block' } }} tooltip onClick={() => deleteNotes(element)} aria-label="delete">
-                                        <DeleteIcon />
-                                    </IconButton>
-                                    <Button onClick={() => deleteNotes(element)} fullWidth mt={2} sx={{ display: { xs: 'block', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, marginTop: '1rem !important' }} variant="outlined"> Delete </Button>
-                                </>
-                            </Tooltip>
+
+                            <>
+                                <IconButton title="Delete item" sx={{ display: { xs: 'none', sm: 'block', md: 'block', lg: 'block', xl: 'block' } }} onClick={() => deleteNotes(element)} aria-label="delete">
+                                    <DeleteIcon />
+                                </IconButton>
+                                <Button onClick={() => deleteNotes(element)} fullWidth mt={2} sx={{ display: { xs: 'block', sm: 'none', md: 'none', lg: 'none', xl: 'none' }, marginTop: '1rem !important' }} variant="outlined"> Delete </Button>
+                            </>
+
                         </Stack>
                     </Stack>
                 );
             })}
-        </Stack>
+        </AnimatePresence>
+    </Stack >
     );
 }, (prevProp, nextProp) => {
     //call back

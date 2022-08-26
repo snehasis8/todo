@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { TextField, Stack, Button } from '@mui/material';
 import TodoItems from '../ListItems/TodoItems';
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
-// probaly need to fix the use call back expression 
-// need to implement some kind of optimisation for this
-//need to make it mobile responsive as well
+// loading animation completed 
+// delete animation completed
 
 export const Searchbar = () => {
 
@@ -15,7 +14,7 @@ export const Searchbar = () => {
   // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem('NoteData')) || [];
+    // const savedData = JSON.parse(localStorage.getItem('NoteData')) || [];
     // setListItems(savedData);
   }, [])
 
@@ -69,7 +68,7 @@ export const Searchbar = () => {
   const containerAnimation = {
     show: {
       transition: {
-        staggerChildren: 1
+        staggerChildren: 1,
       },
     },
   };
@@ -82,6 +81,7 @@ export const Searchbar = () => {
       transition: {
         ease: [0.6, 0.01, -0.05, 0.95],
         duration: 1.6,
+        delayChildren: 4
       },
     },
     exit: {
