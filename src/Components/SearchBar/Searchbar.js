@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { TextField, Stack, Button } from '@mui/material';
 import TodoItems from '../ListItems/TodoItems';
 import { motion } from "framer-motion"
@@ -8,6 +8,8 @@ import { motion } from "framer-motion"
 
 export const Searchbar = () => {
 
+  const inputEl2 = useRef(null);
+
   const [listtItems, setListItems] = useState(JSON.parse(localStorage.getItem('NoteData')) || []);
   const [currentText, setText] = useState('');
   const [operatingItemId, setOperatingIdItem] = useState('');
@@ -16,6 +18,13 @@ export const Searchbar = () => {
   useEffect(() => {
     // const savedData = JSON.parse(localStorage.getItem('NoteData')) || [];
     // setListItems(savedData);
+
+
+    setTimeout(() => {
+      console.log(inputEl2.current.actions);
+      inputEl2.current.focus();
+
+    }, 2000);
   }, [])
 
 
@@ -105,6 +114,8 @@ export const Searchbar = () => {
       <Stack
         component={motion.div}
         variants={item}
+
+        whileTap={{ scale: 0.9 }}
         direction={{ md: "row", xs: "column", sm: "row" }}
         sx={{
           padding: "1rem",
@@ -115,6 +126,7 @@ export const Searchbar = () => {
         }}
       >
         <TextField
+          inputRef={inputEl2}
           sx={{ width: { xs: "100%", md: "90%", sm: "80%", lg: "80%" } }}
           fullWidth
           multiline

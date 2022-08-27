@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Stack, Button, Typography, IconButton, Divider, Checkbox } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { motion, AnimatePresence } from "framer-motion"
+import "../../App.css";
 
 const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCount, operatingItemId }) => {
     const renderList = Object.values(listData);
@@ -86,11 +87,11 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
                                 />
                                 <Divider variant="middle" orientation="vertical" />
                                 <motion.span
-                                    style={{ position: "relative", textDecorationColor: 'red' }}
-
+                                    style={{ position: "relative" }}
+                                // className="my-p"
                                 >
                                     <Typography
-
+                                        className="my-p"
                                         component={motion.p}
                                         variants={{
                                             checked: (element) => ({
@@ -99,10 +100,9 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
                                                 scale: element.isChecked ? 1.2 : 1,
                                                 rotate: element.isChecked ? 360 : 0,
                                                 textDecoration: element.isChecked
-                                                    ? "line-through red"
+                                                    ? "line-through"
                                                     : "unset",
                                                 transition: { duration: 0.5 },
-
                                             }),
                                         }}
                                         initial={false}
