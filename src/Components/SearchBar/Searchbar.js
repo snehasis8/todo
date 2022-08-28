@@ -119,10 +119,10 @@ export const Searchbar = () => {
         direction={{ md: "row", xs: "column", sm: "row" }}
         sx={{
           padding: "1rem",
-          border: "1px solid #8c8888c2",
+          // border: "1px solid #8c8888c2",
           justifyContent: "space-evenly",
           margin: "1rem",
-          backgroundColor: "#78979d0f",
+          // backgroundColor: "#78979d0f",
         }}
       >
         <TextField

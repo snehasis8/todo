@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import Searchbar from '../SearchBar/Searchbar'
-import { Container } from '@mui/material';
+import BackgroundImg from './BackgroundImg';
 
 export class ContainerBox extends Component {
     render() {
         return (
-            <Container  >
+
+
+            <div>
+                <BackgroundImg />
                 <Searchbar />
-            </Container>
+            </div>
+
         );
     }
 }

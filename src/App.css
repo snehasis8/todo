@@ -40,3 +40,12 @@ body {
   background: #3271e6; 
 }
 
+.container-svg {
+  background-color: rgb(255, 255, 255);
+  /* background-color: #02ffcb; */
+   overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 13rem;
+}

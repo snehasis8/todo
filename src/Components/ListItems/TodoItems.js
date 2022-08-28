@@ -6,7 +6,8 @@ import "../../App.css";
 
 const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCount, operatingItemId }) => {
     const renderList = Object.values(listData);
-    const [loading, setLoading] = useState(true)
+    // eslint-disable-next-line no-unused-vars
+    const [__, setLoading] = useState(true)
     useEffect(() => {
         return () => {
             setTimeout(() => {
@@ -32,8 +33,8 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
             overflowY: "auto",
             justifyContent: "stretch",
             margin: "1rem",
-            border: "1px solid #8c8888c2",
-            backgroundColor: "#78979d0f",
+            // border: "1px solid #8c8888c2",
+            // backgroundColor: "#78979d0f",
             overflowX: "hidden",
         }}
     >
