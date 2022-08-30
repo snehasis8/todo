@@ -115,7 +115,7 @@ export const Searchbar = () => {
         component={motion.div}
         variants={item}
 
-        whileTap={{ scale: 0.9 }}
+        // whileTap={{ scale: 0.9 }}
         direction={{ md: "row", xs: "column", sm: "row" }}
         sx={{
           padding: "1rem",
