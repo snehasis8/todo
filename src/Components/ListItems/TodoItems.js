@@ -13,8 +13,6 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
             setTimeout(() => {
                 setLoading(false)
             }, 1300)
-            //component will unmount action
-            // localStorage.setItem('NoteData', JSON.stringify(renderList));
         };
     }, [renderList]);
 
@@ -29,16 +27,14 @@ const TodoItems = React.memo(({ listData, deleteNotes, handleCheckbox, totalCoun
         // direction={{ md: 'column', xs: 'row', sm: 'row' }}
         sx={{
             padding: "0.5rem",
-            maxHeight: "calc(75vh - 5rem)",
+            maxHeight: "calc(60vh - 5rem)",
             overflowY: "auto",
             justifyContent: "stretch",
-            margin: "1rem",
-            // border: "1px solid #8c8888c2",
-            // backgroundColor: "#78979d0f",
+            margin: "0.5rem 2rem",
+            border: "1px solid #312f2fc2",
             overflowX: "hidden",
         }}
     >
-        {/* {loading && <p style={{ textAlign: "center" }}> Loading...</p>} */}
         <AnimatePresence >
             {renderList?.reverse().map((element, i) => {
                 return (
