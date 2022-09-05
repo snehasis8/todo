@@ -29,23 +29,25 @@ export const Searchbar = () => {
 
 
 
-  const addItems = useCallback(async () => {
+  const addItems = () => {
     if (currentText.length > 0) {
-      localStorage.setItem('NoteData', JSON.stringify(listtItems));
-      setListItems((prevState) => [
-        ...prevState,
-        {
-          value: currentText,
-          id: (Math.random() * 1000).toFixed(0),
-          isChecked: false,
-        },
-      ]);
+      const tempList = [...listtItems];
+      const addebleitem = {
+        value: currentText,
+        id: (Math.random() * 1000).toFixed(0),
+        isChecked: false,
+      }
 
-      // localStorage.setItem('NoteData', JSON.stringify(listtItems));
+      localStorage.setItem('NoteData', JSON.stringify([...tempList, addebleitem]));
+      //modification of this functiom is needed to fix thi bug
+      setListItems((prevState) => ([
+        ...prevState,
+        addebleitem,
+      ]));
       setText('')
     }
 
-  }, [currentText, listtItems])
+  }
 
   const deleteNotes = useCallback((deleteItem) => {
 
@@ -59,6 +61,12 @@ export const Searchbar = () => {
     setText('')
 
   }, [listtItems])
+
+  const deleteAllItems = useCallback(() => {
+    localStorage.setItem('NoteData', '[]');
+    setListItems([]);
+    setText('')
+  }, [])
 
   const handleCheckbox = useCallback((checkboxItem) => {
 
@@ -104,11 +112,9 @@ export const Searchbar = () => {
   }
 
   //https://stackoverflow.com/questions/70668440/framer-motion-animate-presence-without-conditional-rendering        
-  // console.log(rederTodoList);
-  // console.log(loading);
+
   const listtItemsFlag = !!listtItems.length > 0;
 
-  console.log(listtItemsFlag);
   return (
     <motion.div variants={containerAnimation} initial="hidden" animate="show" exit="exit">
       <Stack
@@ -144,6 +150,8 @@ export const Searchbar = () => {
           }}
         />
         <Button onClick={addItems}> Add Item</Button>
+        <Button onClick={deleteAllItems}> Delete All</Button>
+
       </Stack>
 
 
