@@ -5,7 +5,18 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-    /* color: red; */
+  overflow-x: hidden;
+  /* background-color: #78979d0f; */
+  /* background: #78979d0f; */
+  /* background-color: #3271e6; */
+  /* background: #78979d0f;
+  background: url(https://i.pinimg.com/originals/44/6e/3b/446e3b79395a287ca32f7977dd83b290.jpg);
+  background-size: cover */
+}
+
+.my-p{
+  text-decoration-color: rgb(195, 6, 28) !important;
+  -webkit-text-decoration-color: rgb(255, 0, 8) !important;
 }
 
 ::-webkit-scrollbar {
@@ -25,6 +36,16 @@ body {
 }
 
 /* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
-} */
+::-webkit-scrollbar-thumb:hover {
+  background: #3271e6; 
+}
+
+.container-svg {
+  /* background-color: rgb(255, 255, 255); */
+    border: 1px solid yellow;
+     display: flex; 
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* height: 24rem; */
+}
